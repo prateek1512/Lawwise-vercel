@@ -1,0 +1,277 @@
+/* ============================
+   Careers Page — Modern Obsidian
+   ============================ */
+
+/* Hero */
+.careers-hero {
+    position: relative;
+    overflow: hidden;
+    padding: calc(var(--nav-height) + 80px) 0 80px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.careers-headline {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-weight: 400;
+    line-height: 0.9;
+    color: var(--white);
+    margin-bottom: 24px;
+    letter-spacing: -0.02em;
+}
+
+.careers-sub {
+    font-size: 16px;
+    color: var(--silver);
+    max-width: 600px;
+    line-height: 1.7;
+    font-weight: 300;
+}
+
+/* Why Grid */
+.careers-why {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.why-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.why-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 24px 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    transition: all 0.3s var(--ease-out);
+}
+
+.why-item:hover {
+    border-color: var(--border-hover);
+    background: var(--glass-hover);
+}
+
+.why-item svg {
+    color: var(--silver-muted);
+    flex-shrink: 0;
+    margin-top: 2px;
+    opacity: 0.6;
+}
+
+.why-item p {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--silver);
+    letter-spacing: 0.03em;
+    line-height: 1.6;
+}
+
+/* Roles */
+.careers-roles {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.roles-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 12px;
+}
+
+.role-card {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 28px 32px;
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    transition: all 0.3s var(--ease-out);
+}
+
+.role-card:hover {
+    border-color: var(--border-hover);
+    background: var(--glass-hover);
+    transform: translateX(4px);
+}
+
+.role-index {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.6rem;
+    color: var(--white);
+    opacity: 0.3;
+    flex-shrink: 0;
+    min-width: 40px;
+}
+
+.role-card h3 {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--white);
+    margin-bottom: 6px;
+    font-weight: 400;
+    flex-shrink: 0;
+    min-width: 240px;
+}
+
+.role-card p {
+    font-size: 13px;
+    color: var(--silver-muted);
+    line-height: 1.6;
+    font-weight: 300;
+    flex: 1;
+}
+
+.role-meta {
+    flex-shrink: 0;
+}
+
+.role-location {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--silver-muted);
+}
+
+.role-location svg {
+    opacity: 0.5;
+}
+
+.role-card .btn {
+    flex-shrink: 0;
+}
+
+/* Values */
+.careers-values {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.values-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.value-item {
+    padding: 14px 28px;
+    border: 1px solid var(--border-color);
+    border-radius: 50px;
+    background: var(--glass-bg);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--silver);
+    transition: all 0.3s var(--ease-out);
+}
+
+.value-item:hover {
+    border-color: var(--border-hover);
+    background: var(--glass-hover);
+    color: var(--white);
+}
+
+/* Apply CTA */
+.careers-apply-cta {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.apply-cta-card {
+    text-align: center;
+    padding: 64px 32px;
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+}
+
+.apply-cta-card h2 {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    color: var(--white);
+    margin-bottom: 16px;
+    font-weight: 400;
+    line-height: 0.9;
+}
+
+.apply-cta-card p {
+    font-size: 15px;
+    color: var(--silver);
+    max-width: 560px;
+    margin: 0 auto 32px;
+    line-height: 1.7;
+    font-weight: 300;
+}
+
+.apply-alt {
+    margin-top: 20px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--silver-muted);
+    letter-spacing: 0.05em;
+}
+
+.apply-alt a {
+    color: var(--silver);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    margin-left: 6px;
+    transition: color 0.2s;
+}
+
+.apply-alt a:hover {
+    color: var(--white);
+}
+
+/* Closing */
+.careers-closing {
+    padding: 48px 0;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.careers-closing p {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    color: var(--silver-muted);
+    font-weight: 400;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .role-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .role-card h3 {
+        min-width: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .why-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .role-index {
+        display: none;
+    }
+}

@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LawWise Nyai AI — AI for Lawyers Who Value Time</title>
+    <meta name="description"
+        content="LawWise Nyai AI is an AI-powered platform that helps lawyers and law firms automate research, drafting, and case analysis in minutes instead of hours." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js" defer></script>
+</head>
+
+<body>
+    <!-- ========== NAVIGATION ========== -->
+    <nav id="navbar" class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo" aria-label="LawWise Nyai AI Home">
+                <span class="logo-mark">L</span>
+                <span>LAWWISE</span>
+            </a>
+            <div class="nav-pills-wrap">
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#features">
+                            <span class="pill-circle"></span>
+                            <span class="pill-label-wrap"><span class="pill-label">Features</span><span
+                                    class="pill-label-hover">Features</span></span>
+                        </a></li>
+                    <li><a href="#lawyer-network">
+                            <span class="pill-circle"></span>
+                            <span class="pill-label-wrap"><span class="pill-label">Network</span><span
+                                    class="pill-label-hover">Network</span></span>
+                        </a></li>
+                    <li><a href="#founders">
+                            <span class="pill-circle"></span>
+                            <span class="pill-label-wrap"><span class="pill-label">About</span><span
+                                    class="pill-label-hover">About</span></span>
+                        </a></li>
+                    <li><a href="careers.html">
+                            <span class="pill-circle"></span>
+                            <span class="pill-label-wrap"><span class="pill-label">Career</span><span
+                                    class="pill-label-hover">Career</span></span>
+                        </a></li>
+                    <li><a href="contact.html" class="nav-cta">
+                            <span class="pill-circle"></span>
+                            <span class="pill-label-wrap"><span class="pill-label">Join</span><span
+                                    class="pill-label-hover">Join</span></span>
+                        </a></li>
+                </ul>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ========== HERO ========== -->
+    <section id="hero" class="hero">
+        <!-- Force Field Particle Background -->
+        <div id="forceFieldCanvas" class="hero-forcefield"></div>
+        <div class="hero-inner">
+
+            <div class="hero-badge anim-fade-up">
+                <span class="badge-dot"></span> NOW IN EARLY DEVELOPMENT
+            </div>
+            <h1 class="hero-headline shiny-text anim-fade-up" style="--delay:.1s">
+                AI for Lawyers<br />Who Value
+                <span class="rolodex-container" id="rolodexContainer">
+                    <span class="rolodex-word silver-gradient active">Efficiency.</span>
+                    <span class="rolodex-word silver-gradient">Time.</span>
+                    <span class="rolodex-word silver-gradient">Results.</span>
+                    <span class="rolodex-word silver-gradient">Precision.</span>
+                    <span class="rolodex-word silver-gradient">Clarity.</span>
+                </span>
+            </h1>
+            <p class="hero-sub anim-fade-up" style="--delay:.2s">
+                Research in minutes. Draft with precision. Analyse cases instantly.
+                Built to assist lawyers — not replace them.
+            </p>
+            <div class="hero-ctas anim-fade-up" style="--delay:.3s">
+                <a href="contact.html" class="btn silver-btn" id="cta-demo"><span class="btn-text">Contact Us</span></a>
+                <a href="careers.html" class="btn silver-btn" id="cta-access"><span class="btn-text">Join Our
+                        Team</span></a>
+            </div>
+
+            <!-- Metadata Bar -->
+
+            <!-- Terminal Demo -->
+            <div class="hero-terminal anim-fade-up" style="--delay:.5s">
+                <div class="terminal-glass">
+                    <div class="terminal-header">
+                        <span class="terminal-dot"></span>
+                        <span class="terminal-dot"></span>
+                        <span class="terminal-dot"></span>
+                        <span class="terminal-title">lawwisenyai.ai — legal research</span>
+                    </div>
+                    <div class="terminal-body">
+                        <div class="typing-line">
+                            <span class="prompt">→</span>
+                            <span class="typed-text" id="typedText"></span>
+                            <span class="cursor-blink">|</span>
+                        </div>
+                        <div class="result-lines">
+                            <div class="result-line shimmer" style="width:92%"></div>
+                            <div class="result-line shimmer" style="width:78%;--shimmer-delay:.15s"></div>
+                            <div class="result-line shimmer" style="width:85%;--shimmer-delay:.3s"></div>
+                            <div class="result-line shimmer" style="width:60%;--shimmer-delay:.45s"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- ========== THE CHALLENGE ========== -->
+    <section id="challenge" class="section challenge-section">
+        <div class="container">
+            <div class="section-label anim-reveal">THE CHALLENGE</div>
+            <h2 class="section-title shiny-text anim-reveal">
+                The Legal System is Brilliant.<br /><span class="silver-gradient">The Process is Not.</span>
+            </h2>
+
+            <div class="challenge-stats">
+                <div class="challenge-stat anim-reveal">
+                    <div class="stat-number">5-8 hrs</div>
+                    <p class="stat-desc">Lawyers spend <strong>5–8 hours daily</strong> on repetitive research,
+                        drafting, and document review.</p>
+                </div>
+                <div class="challenge-stat anim-reveal">
+                    <div class="stat-number">70%</div>
+                    <p class="stat-desc">Of a lawyer's valuable time is consumed by <strong>manual, low-leverage
+                            workflows</strong>.</p>
+                </div>
+                <div class="challenge-stat anim-reveal">
+                    <div class="stat-number">↓</div>
+                    <p class="stat-desc">Productivity drops and <strong>billable efficiency</strong> is significantly
+                        reduced.</p>
+                </div>
+            </div>
+
+            <div class="challenge-extended anim-reveal">
+                <h3 class="challenge-extended-title">But the challenges don't end there.</h3>
+                <div class="challenge-list">
+                    <div class="challenge-item anim-reveal">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <circle cx="11" cy="11" r="8" />
+                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        </svg>
+                        <p>Difficulty in finding <strong>consistent, high-quality clients</strong></p>
+                    </div>
+                    <div class="challenge-item anim-reveal">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                            <circle cx="12" cy="12" r="3" />
+                        </svg>
+                        <p><strong>Limited visibility</strong> in a crowded legal market</p>
+                    </div>
+                    <div class="challenge-item anim-reveal">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <line x1="18" y1="20" x2="18" y2="10" />
+                            <line x1="12" y1="20" x2="12" y2="4" />
+                            <line x1="6" y1="20" x2="6" y2="14" />
+                        </svg>
+                        <p>No structured way to showcase <strong>verified case performance</strong></p>
+                    </div>
+                    <div class="challenge-item anim-reveal">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
+                        </svg>
+                        <p>Reliance on <strong>word-of-mouth</strong> instead of data-backed credibility</p>
+                    </div>
+                    <div class="challenge-item anim-reveal">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                        <p>Young lawyers <strong>struggle to build reputation</strong> despite strong capabilities</p>
+                    </div>
+                </div>
+                <p class="challenge-summary anim-reveal">Many capable lawyers lose opportunities simply because
+                    potential clients <strong>cannot easily discover or evaluate them</strong>.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== THE SOLUTION ========== -->
+    <section id="solution" class="section solution-section">
+        <div class="container">
+            <div class="solution-grid">
+                <div class="solution-text anim-reveal">
+                    <div class="section-label">THE SOLUTION</div>
+                    <h2 class="section-title shiny-text">Meet <span class="silver-gradient">LawWise Nyai AI</span></h2>
+                    <p class="solution-desc">
+                        An intelligent legal assistant designed specifically for litigation lawyers and law firms.
+                        Built to <strong>assist lawyers — not replace them</strong>. LawWise Nyai AI amplifies your
+                        expertise with the speed of artificial intelligence.
+                    </p>
+                    <p class="solution-desc">
+                        LawWise Nyai AI not only automates legal research, drafting, and analysis — it also builds a
+                        structured <strong>Lawyer Intelligence Network</strong>:
+                    </p>
+                    <ul class="solution-features">
+                        <li>Lawyers create detailed professional profiles</li>
+                        <li>Case history (won/lost/ongoing) can be uploaded</li>
+                        <li>Expertise areas are categorized</li>
+                        <li>Performance analytics are generated</li>
+                        <li>Clients discover lawyers based on specialization &amp; data</li>
+                    </ul>
+                    <div class="solution-impact">
+                        <p>Lawyers gain visibility</p>
+                        <p>Clients gain transparency</p>
+                        <p>Ecosystem gets smarter</p>
+                    </div>
+                    <blockquote class="solution-quote">
+                        "From AI-powered productivity to AI-powered discoverability — LawWise Nyai AI transforms how law
+                        is
+                        practiced and accessed."
+                    </blockquote>
+                    <a href="#features" class="btn silver-btn"><span class="btn-text">Explore Features</span></a>
+                </div>
+                <div class="solution-visual anim-reveal">
+                    <div class="solution-card-stack">
+                        <div class="sol-card">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor"
+                                stroke-width="1.5">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                            </svg>
+                            <span>AI Research Engine</span>
+                        </div>
+                        <div class="sol-card">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor"
+                                stroke-width="1.5">
+                                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                                <polyline points="14 2 14 8 20 8" />
+                                <line x1="16" y1="13" x2="8" y2="13" />
+                                <line x1="16" y1="17" x2="8" y2="17" />
+                            </svg>
+                            <span>Smart Drafting</span>
+                        </div>
+                        <div class="sol-card">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor"
+                                stroke-width="1.5">
+                                <rect x="3" y="3" width="18" height="18" rx="2" />
+                                <path d="M3 9h18M9 21V9" />
+                            </svg>
+                            <span>Case Analyser</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Placeholder -->
+            <div class="solution-video-wrapper anim-reveal">
+                <div class="solution-video-container">
+                    <!-- Insert your MP4 file below -->
+                    <video class="solution-video" controls poster="" preload="metadata">
+                        <source src="insert-your-video.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <!-- Fallback placeholder text if video source is missing -->
+                    <div class="video-placeholder-text">
+                        <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                        <p>Insert MP4 Video Here</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CAPABILITIES / FEATURES ========== -->
+    <section id="features" class="section features-section">
+        <div class="container">
+            <div class="section-label anim-reveal">CAPABILITIES</div>
+            <h2 class="section-title shiny-text anim-reveal">Everything You Need to<br /><span
+                    class="silver-gradient">Practice
+                    Smarter</span></h2>
+
+            <div class="bento-grid">
+                <div class="bento-card anim-reveal" id="feature-research">
+                    <div class="bento-index">01 / RESEARCH</div>
+                    <h3>AI Legal<br />Research</h3>
+                    <ul>
+                        <li>Get case laws and relevant precedents in minutes</li>
+                        <li>Context-aware legal search</li>
+                    </ul>
+                </div>
+                <div class="bento-card anim-reveal" id="feature-drafting">
+                    <div class="bento-index">02 / DRAFTING</div>
+                    <h3>Smart<br />Drafting</h3>
+                    <ul>
+                        <li>Generate petitions, notices, agreements instantly</li>
+                        <li>Customizable jurisdiction-based formats</li>
+                    </ul>
+                </div>
+                <div class="bento-card anim-reveal" id="feature-analysis">
+                    <div class="bento-index">03 / ANALYSIS</div>
+                    <h3>Case<br />Analysis</h3>
+                    <ul>
+                        <li>Summarize judgments &amp; extract key arguments</li>
+                        <li>Identify winning patterns from past rulings</li>
+                    </ul>
+                </div>
+                <div class="bento-card anim-reveal" id="feature-security">
+                    <div class="bento-index">04 / SECURITY</div>
+                    <h3>Enterprise<br />Security</h3>
+                    <ul>
+                        <li>End-to-end encrypted data at rest &amp; in transit</li>
+                        <li>Secure, SOC2-ready cloud architecture</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== LAWYER INTELLIGENCE NETWORK ========== -->
+    <section id="lawyer-network" class="section lin-section">
+        <div class="container">
+            <div class="section-label anim-reveal">LAWYER INTELLIGENCE NETWORK</div>
+            <h2 class="section-title shiny-text anim-reveal">India's First AI-Powered<br /><span
+                    class="silver-gradient">Lawyer
+                    Intelligence Network</span></h2>
+            <p class="lin-subtitle anim-reveal">Where Legal Performance Meets Data Transparency.</p>
+            <p class="lin-desc anim-reveal">
+                LawWise Nyai AI enables lawyers to create professional profiles within a secure database featuring
+                case history, wins &amp; losses record, practice areas, years of experience, courts practiced in,
+                specialization domains, and AI-generated case success analytics.
+            </p>
+
+            <!-- Capabilities Grid -->
+            <div class="lin-caps-grid">
+                <div class="lin-cap-card anim-reveal" id="lin-cap-upload">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                            <polyline points="14 2 14 8 20 8" />
+                            <line x1="12" y1="18" x2="12" y2="12" />
+                            <polyline points="9 15 12 12 15 15" />
+                        </svg>
+                    </div>
+                    <h3>Upload Case Records</h3>
+                    <ul>
+                        <li>Add case details manually or upload judgments</li>
+                        <li>Categorize as won, lost, or ongoing</li>
+                    </ul>
+                </div>
+                <div class="lin-cap-card anim-reveal" id="lin-cap-analytics">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                        </svg>
+                    </div>
+                    <h3>Performance Analytics</h3>
+                    <ul>
+                        <li>AI-generated win-rate analysis</li>
+                        <li>Case-type breakdown &amp; historical insights</li>
+                    </ul>
+                </div>
+                <div class="lin-cap-card anim-reveal" id="lin-cap-expertise">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z" />
+                            <line x1="7" y1="7" x2="7.01" y2="7" />
+                        </svg>
+                    </div>
+                    <h3>Expertise Tagging</h3>
+                    <ul>
+                        <li>Criminal, Corporate, Civil, Constitutional</li>
+                        <li>Arbitration, IP, and custom domains</li>
+                    </ul>
+                </div>
+                <div class="lin-cap-card anim-reveal" id="lin-cap-secure">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        </svg>
+                    </div>
+                    <h3>Verified &amp; Secure</h3>
+                    <ul>
+                        <li>Encrypted document handling</li>
+                        <li>Lawyers control what is publicly visible</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- How It Works -->
+            <div class="lin-hiw anim-reveal">
+                <h3 class="lin-hiw-title">Get Started in <span class="silver-gradient">3 Steps</span></h3>
+                <div class="lin-hiw-stepper" id="hiwStepper">
+                    <!-- Step Indicators -->
+                    <div class="stepper-indicators">
+                        <div class="stepper-indicator active" data-step="1">
+                            <div class="stepper-circle">
+                                <span class="stepper-num">1</span>
+                                <svg class="stepper-check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                            </div>
+                            <div class="stepper-glow"></div>
+                        </div>
+                        <div class="stepper-connector" data-after="1">
+                            <div class="stepper-connector-fill"></div>
+                        </div>
+                        <div class="stepper-indicator" data-step="2">
+                            <div class="stepper-circle">
+                                <span class="stepper-num">2</span>
+                                <svg class="stepper-check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                            </div>
+                            <div class="stepper-glow"></div>
+                        </div>
+                        <div class="stepper-connector" data-after="2">
+                            <div class="stepper-connector-fill"></div>
+                        </div>
+                        <div class="stepper-indicator" data-step="3">
+                            <div class="stepper-circle">
+                                <span class="stepper-num">3</span>
+                                <svg class="stepper-check" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                            </div>
+                            <div class="stepper-glow"></div>
+                        </div>
+                    </div>
+
+                    <!-- Step Content Viewport -->
+                    <div class="stepper-viewport">
+                        <div class="stepper-panel active" data-panel="1">
+                            <h4 class="stepper-panel-title">Create Your Profile</h4>
+                            <p class="stepper-panel-desc">Set up your professional identity within the LawWise Nyai AI ecosystem. Add your bar registration, courts practiced in, years of experience, and specialization domains.</p>
+                            <div class="stepper-panel-visual">
+                                <div class="stepper-mock-card">
+                                    <div class="mock-avatar"></div>
+                                    <div class="mock-lines">
+                                        <div class="mock-line" style="width:70%"></div>
+                                        <div class="mock-line" style="width:50%"></div>
+                                        <div class="mock-line" style="width:85%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="stepper-panel" data-panel="2">
+                            <h4 class="stepper-panel-title">Upload Case Records &amp; Expertise</h4>
+                            <p class="stepper-panel-desc">Add your case history — categorised as won, lost, or ongoing. Upload judgments or enter details manually. Tag practice areas like Criminal, Corporate, Civil, or Constitutional.</p>
+                            <div class="stepper-panel-chips">
+                                <span class="stepper-chip">Criminal Law</span>
+                                <span class="stepper-chip">Corporate</span>
+                                <span class="stepper-chip">Civil</span>
+                                <span class="stepper-chip">IP Law</span>
+                                <span class="stepper-chip">Arbitration</span>
+                            </div>
+                        </div>
+                        <div class="stepper-panel" data-panel="3">
+                            <h4 class="stepper-panel-title">Let AI Generate Insights</h4>
+                            <p class="stepper-panel-desc">Once your data is in, LawWise Nyai AI generates win-rate analytics, case-type breakdowns, and historical insights — building your verifiable professional reputation.</p>
+                            <div class="stepper-panel-status">
+                                <div class="stepper-status-row">
+                                    <span class="stepper-status-label">Profile Status</span>
+                                    <span class="stepper-status-value">Complete</span>
+                                </div>
+                                <div class="stepper-status-row">
+                                    <span class="stepper-status-label">AI Insights</span>
+                                    <span class="stepper-status-value">Ready</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation -->
+                    <div class="stepper-footer">
+                        <button class="stepper-btn-back" id="stepperBack" style="opacity:0;pointer-events:none">Back</button>
+                        <button class="stepper-btn-next" id="stepperNext">Continue</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="lin-cta anim-reveal">
+                <h3>Build Your Legal Reputation <span class="silver-gradient">with Data.</span></h3>
+                <div class="lin-cta-btns">
+                    <a href="contact.html" class="btn silver-btn" id="cta-profile"><span class="btn-text">Create Lawyer
+                            Profile</span></a>
+                    <a href="contact.html" class="btn silver-btn" id="cta-network"><span class="btn-text">Join the
+                            Network</span></a>
+                </div>
+            </div>
+
+            <!-- Compliance -->
+            <div class="lin-compliance anim-reveal">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+                <p>All uploaded data remains encrypted and fully controlled by the lawyer. LawWise Nyai AI does not
+                    publicly disclose confidential client information without consent.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOUNDERS ========== -->
+    <section id="founders" class="section founders-section">
+        <div class="container">
+            <div class="section-label anim-reveal">OUR STORY</div>
+            <h2 class="section-title shiny-text anim-reveal">Built by Young Innovators<br /><span
+                    class="silver-gradient">Reimagining Legal Work</span></h2>
+            <div class="founders-grid">
+                <div class="founder-card anim-reveal" id="founder-1">
+                    <div class="founder-img-wrapper">
+                        <img src="founder1.png" alt="Prateek Sharma — Co-Founder & CEO" loading="lazy" />
+                    </div>
+                    <h3>Prateek Sharma</h3>
+                    <p class="founder-role">Co-Founder &amp; CEO</p>
+                    <p class="founder-bio">Passionate about leveraging AI to transform legal practice. Leading the
+                        vision of making cutting-edge technology accessible to every lawyer.</p>
+                </div>
+                <div class="founder-card anim-reveal" id="founder-2">
+                    <div class="founder-img-wrapper">
+                        <img src="founder2.png" alt="Arjun Mehta — Co-Founder & CTO" loading="lazy" />
+                    </div>
+                    <h3>Arjun Mehta</h3>
+                    <p class="founder-role">Co-Founder &amp; CTO</p>
+                    <p class="founder-bio">Engineer and AI researcher building intelligent systems that understand the
+                        nuances of Indian law and legal reasoning.</p>
+                </div>
+            </div>
+            <div class="founders-badges anim-reveal">
+                <div class="fbadge">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+                        stroke-width="1.5">
+                        <path
+                            d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                    </svg>
+                    Government-Recognized Startup
+                </div>
+                <div class="fbadge">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+                        stroke-width="1.5">
+                        <path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" />
+                    </svg>
+                    Raised ₹25 Lakh in Funding
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CAREERS TEASER ========== -->
+    <section id="careers" class="section careers-home-section">
+        <div class="container">
+            <div class="careers-home-inner anim-reveal">
+                <div class="section-label">CAREERS</div>
+                <h2 class="section-title shiny-text">Careers at<br /><span class="silver-gradient">LawWise Nyai
+                        AI</span></h2>
+                <p class="lin-desc">We are building the intelligence layer for the legal system — and we are looking for
+                    exceptional individuals to build it with us.</p>
+                <p class="lin-desc">At LawWise Nyai AI, we operate at the intersection of law, data, and artificial
+                    intelligence. We are assembling a focused, high-caliber team committed to long-term impact in legal
+                    infrastructure.</p>
+                <a href="careers.html" class="btn silver-btn"><span class="btn-text">Explore Careers</span></a>
+                <span class="careers-home-note">We review every application carefully.</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-left">
+                <a href="#" class="nav-logo" aria-label="LawWise Nyai AI Home">
+                    <span class="logo-mark">L</span>
+                    <span>LAWWISE</span>
+                </a>
+                <p class="footer-tagline">AI-powered legal intelligence for modern lawyers.</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <a href="#features">Features</a>
+                    <a href="#lawyer-network">Network</a>
+                    <a href="contact.html">Request Demo</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <a href="#founders">About</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="careers.html">Careers</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2026 LawWise Nyai AI Pvt. Ltd. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="forcefield.js"></script>
+    <script>
+        // Initialize force field after p5.js and page load
+        window.addEventListener('load', () => {
+            initForceField('forceFieldCanvas', {
+                hue: 210,
+                saturation: 15,
+                spacing: 12,
+                density: 1.8,
+                minStroke: 1.5,
+                maxStroke: 4,
+                forceStrength: 12,
+                magnifierRadius: 180,
+                friction: 0.88,
+                restoreSpeed: 0.04,
+                particleOpacity: 0.55
+            });
+        });
+    </script>
+</body>
+
+</html>

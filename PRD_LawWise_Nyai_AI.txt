@@ -1,0 +1,267 @@
+================================================================================
+                     PRODUCT REQUIREMENTS DOCUMENT (PRD)
+                        LawWise Nyai AI — Website
+================================================================================
+
+
+1. PRODUCT OVERVIEW
+--------------------------------------------------------------------------------
+
+Product Name:    LawWise Nyai AI
+Company:         LawWise Nyai AI Pvt. Ltd.
+Tagline:         AI for Lawyers Who Value Time
+Status:          Early Development
+Location:        Guwahati, Assam, India
+Funding:         Rs. 25 Lakh raised
+Recognition:     Government-Recognized Startup
+
+Mission:         Build an AI-powered legal assistant and India's first Lawyer
+                 Intelligence Network — designed to assist lawyers, not replace
+                 them.
+
+
+2. PROBLEM STATEMENT
+--------------------------------------------------------------------------------
+
+  - Time Waste:              Lawyers spend 5-8 hours daily on repetitive
+                             research, drafting, and document review.
+
+  - Low Leverage:            70% of a lawyer's time is consumed by manual,
+                             low-leverage workflows.
+
+  - Client Discovery:        Difficulty finding consistent, high-quality clients.
+
+  - Limited Visibility:      Limited visibility in a crowded legal market.
+
+  - No Performance Proof:    No structured way to showcase verified case
+                             performance.
+
+  - Word-of-Mouth Dependency: Reliance on word-of-mouth instead of data-backed
+                             credibility.
+
+  - Reputation Barrier:      Young lawyers struggle to build reputation despite
+                             strong capabilities.
+
+Core insight: Many capable lawyers lose opportunities because potential clients
+cannot easily discover or evaluate them.
+
+
+3. TARGET AUDIENCE
+--------------------------------------------------------------------------------
+
+  Primary:    Litigation lawyers and law firms in India
+  Secondary:  Clients seeking lawyers based on specialization, experience, and
+              legal performance data
+  Tertiary:   Young lawyers looking to build reputation and gain visibility
+
+
+4. PRODUCT FEATURES
+--------------------------------------------------------------------------------
+
+4.1 AI Legal Assistant
+
+  AI Legal Research:
+    - Get case laws and relevant precedents in minutes
+    - Context-aware legal search
+
+  Smart Drafting:
+    - Generate petitions, notices, agreements instantly
+    - Customizable jurisdiction-based formats
+
+  Case Analysis:
+    - Summarize judgments & extract key arguments
+    - Identify winning patterns from past rulings
+
+  Enterprise-Grade Security:
+    - End-to-end encrypted data at rest & in transit
+    - Secure, SOC2-ready cloud architecture
+
+4.2 Lawyer Intelligence Network (LIN)
+
+  India's first AI-powered Lawyer Intelligence Network
+  "Where Legal Performance Meets Data Transparency."
+
+  Upload Case Records:
+    - Add case details manually or upload judgments
+    - Categorize as won, lost, or ongoing
+
+  Performance Analytics:
+    - AI-generated win-rate analysis
+    - Case-type breakdown & historical insights
+
+  Expertise Tagging:
+    - Criminal, Corporate, Civil, Constitutional
+    - Arbitration, IP, and custom domains
+
+  Verified & Secure:
+    - Encrypted document handling
+    - Lawyers control what is publicly visible
+
+  LIN Onboarding Flow (3 Steps):
+    Step 1 — Create Your Profile
+    Step 2 — Upload Case Records & Expertise
+    Step 3 — Let AI Generate Structured Legal Insights
+
+  Value Proposition:
+    - Lawyers gain visibility
+    - Clients gain transparency
+    - The legal ecosystem becomes smarter
+
+  Compliance: All uploaded data remains encrypted and fully controlled by the
+  lawyer. LawWise does not publicly disclose confidential client information
+  without consent.
+
+
+5. WEBSITE SITEMAP & PAGES
+--------------------------------------------------------------------------------
+
+5.1 Home Page (index.html)
+
+  Navigation:                  Features, Network, About, Career, Contact Us
+  Hero:                        Headline, badge ("Now in Early Development"),
+                               typing animation demo, CTAs
+  The Challenge:               Problem statistics (5-8 hrs, 70%) and extended
+                               pain points
+  The Solution:                Product overview with interactive card stack
+                               animation
+  Capabilities:                4 feature cards — Research, Drafting, Analysis,
+                               Security
+  Lawyer Intelligence Network: 4 capability cards, 3-step onboarding, CTA,
+                               compliance note
+  Founders:                    Profiles of Prateek Sharma (CEO) and Arjun Mehta
+                               (CTO) with badges
+  Careers Teaser:              Brief section linking to full careers page
+  Footer:                      Logo, tagline, Product links, Company links,
+                               copyright
+
+5.2 Careers Page (careers.html)
+
+  Hero:                 "Join Us in Reimagining the Future of Law"
+  Why LawWise Nyai AI?: 6 value propositions (recognized startup, first LIN,
+                        funded, AI+law, ownership, impact)
+  Open Roles:           5 positions with location tags and Google Forms apply
+                        links
+  We Value:             Intellectual rigor, Integrity, Long-term thinking,
+                        Builders, Complex systems, Curiosity
+  Apply CTA:            "Think You Belong Here?" with Google Forms link and
+                        email fallback
+  Closing:              Mission tagline
+
+5.3 Application Page (apply.html)
+
+  Hero:          "Apply Now" with review note
+  Form Fields:   Full Name*, Email*, Phone, Role* (dropdown), LinkedIn,
+                 Portfolio/GitHub, Motivation Statement*, Resume upload*
+                 (PDF/DOC/DOCX, 5MB max)
+  Confirmation:  Success message with back-to-careers link
+
+5.4 Contact Page (contact.html)
+
+  Hero:          "Let's Build the Future of Legal Intelligence"
+  Contact Info:  Phone (+91-9395989642, +91-7488830633),
+                 Email (lawwise2025@gmail.com),
+                 Location (Guwahati, Assam)
+  Social:        LinkedIn, Twitter/X, Instagram, YouTube (placeholder links)
+  Contact Form:  Full Name, Email, Phone, Subject, Message, submit with
+                 confirmation
+  WhatsApp:      Direct WhatsApp chat link (wa.me/919395989642)
+  Trust Strip:   "All communications are confidential and handled securely"
+
+
+6. OPEN ROLES
+--------------------------------------------------------------------------------
+
+  Role                               Location
+  -----------------------------------  -------------------
+  AI / Machine Learning Engineer       Remote / India
+  Full Stack Developer                 Hybrid / India
+  Legal Research Analyst               Remote / India
+  UI/UX Designer                       Remote
+  Growth & Partnerships Associate      On-site / India
+
+
+7. TECHNICAL SPECIFICATIONS
+--------------------------------------------------------------------------------
+
+7.1 Tech Stack (Website — Frontend Only)
+
+  Structure:    Vanilla HTML5 (semantic elements)
+  Styling:      Vanilla CSS3 (styles.css — 40KB, careers.css, contact.css)
+  Logic:        Vanilla JavaScript (script.js)
+  Typography:   Google Fonts — Source Serif 4 (300-800 weights)
+  Icons:        Inline SVGs (no icon library dependency)
+  Forms:        Client-side only (no backend); Google Forms as external apply
+                link
+
+7.2 Design System
+
+  Color Palette:   Deep navy (#000047, #1a1a6e), gold accents (#FFF8D9),
+                   gradient text effects
+  Brand Logo:      Custom SVG with gradient fill and "L" lettermark
+  Font:            Source Serif 4 — serif typeface for legal/professional tone
+  Animations:      Scroll-reveal (IntersectionObserver), typing effect on hero,
+                   shimmer loading lines, fade-up on entrance
+  Layout:          Responsive with mobile hamburger menu; CSS grid for cards
+  UX Patterns:     Glassmorphism cards, glow effects, animated orbs background,
+                   hover states
+
+7.3 Key Interactions
+
+  Navigation:      Sticky navbar with scroll-based background change; hamburger
+                   toggle on mobile
+  Hero Typing:     Typewriter effect cycling through legal prompts
+  Scroll Reveal:   IntersectionObserver-based staggered fade-in animations
+  Form Submission: Client-side only — hides form, shows confirmation message
+  File Upload:     Drag-and-drop with click fallback; file name display
+
+
+8. FOUNDING TEAM
+--------------------------------------------------------------------------------
+
+  Prateek Sharma — Co-Founder & CEO
+    Leveraging AI to transform legal practice; making technology accessible
+    to every lawyer.
+
+  Arjun Mehta — Co-Founder & CTO
+    Building intelligent systems that understand Indian law and legal reasoning.
+
+
+9. COMPANY VALUES
+--------------------------------------------------------------------------------
+
+  - Intellectual rigor
+  - Integrity
+  - Long-term thinking
+  - Builders, not spectators
+  - Comfort with complex systems
+  - Curiosity about law and technology
+
+
+10. CONTACT INFORMATION
+--------------------------------------------------------------------------------
+
+  Phone:      +91-9395989642, +91-7488830633
+  Email:      lawwise2025@gmail.com
+  WhatsApp:   wa.me/919395989642
+  Location:   Guwahati, Assam, India
+  Social:     LinkedIn, Twitter/X, Instagram, YouTube (links pending)
+
+
+11. CURRENT LIMITATIONS & FUTURE SCOPE
+--------------------------------------------------------------------------------
+
+  Backend / API:       No live backend; forms are client-side only or link to
+                       Google Forms
+  AI Features:         Described but not yet functional on the website (early
+                       development)
+  Lawyer Database:     Conceptual — no live profile creation or search yet
+  Payment / Pricing:   Not mentioned; no pricing page exists
+  Authentication:      No login/signup system on the website
+  Social Links:        Placeholder links — not yet connected
+  SEO:                 Title tags and meta descriptions present; no structured
+                       data/schema markup
+
+
+================================================================================
+         Document generated from codebase analysis — March 2026
+================================================================================

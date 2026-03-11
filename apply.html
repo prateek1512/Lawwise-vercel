@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Apply — LawWise Nyai AI</title>
+    <meta name="description"
+        content="Apply to join the LawWise Nyai AI team. Submit your application for open roles in AI, engineering, legal research, design, and partnerships." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="contact.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js" defer></script>
+</head>
+
+<body>
+    <!-- ========== NAVBAR ========== -->
+    <nav id="navbar" class="navbar scrolled">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo" aria-label="LawWise Nyai AI Home">
+                <span class="logo-mark">L</span>
+                <span>LAWWISE</span>
+            </a>
+            <div class="nav-pills-wrap">
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html#features">
+                        <span class="pill-circle"></span>
+                        <span class="pill-label-wrap"><span class="pill-label">Features</span><span class="pill-label-hover">Features</span></span>
+                    </a></li>
+                    <li><a href="index.html#lawyer-network">
+                        <span class="pill-circle"></span>
+                        <span class="pill-label-wrap"><span class="pill-label">Network</span><span class="pill-label-hover">Network</span></span>
+                    </a></li>
+                    <li><a href="index.html#founders">
+                        <span class="pill-circle"></span>
+                        <span class="pill-label-wrap"><span class="pill-label">About</span><span class="pill-label-hover">About</span></span>
+                    </a></li>
+                    <li><a href="careers.html">
+                        <span class="pill-circle"></span>
+                        <span class="pill-label-wrap"><span class="pill-label">Career</span><span class="pill-label-hover">Career</span></span>
+                    </a></li>
+                    <li><a href="contact.html" class="nav-cta">
+                        <span class="pill-circle"></span>
+                        <span class="pill-label-wrap"><span class="pill-label">Join</span><span class="pill-label-hover">Join</span></span>
+                    </a></li>
+                </ul>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ========== HERO ========== -->
+    <section class="apply-hero">
+        <div id="forceFieldApply" class="hero-forcefield"></div>
+        <div class="container" style="position:relative;z-index:2">
+            <div class="section-label anim-reveal">APPLICATION</div>
+            <h1 class="apply-headline shiny-text anim-reveal">Apply <span class="silver-gradient">Now</span></h1>
+            <p class="apply-note anim-reveal">We carefully review every application. Expect a response within 5-7 business days.</p>
+        </div>
+    </section>
+
+    <!-- ========== FORM ========== -->
+    <section class="section apply-form-section">
+        <div class="container">
+            <div class="apply-form-wrapper anim-reveal">
+                <form id="applyForm" class="obsidian-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="applyName">FULL NAME *</label>
+                            <input type="text" id="applyName" name="name" required placeholder="Your full name" />
+                        </div>
+                        <div class="form-group">
+                            <label for="applyEmail">EMAIL *</label>
+                            <input type="email" id="applyEmail" name="email" required placeholder="you@example.com" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="applyPhone">PHONE</label>
+                            <input type="tel" id="applyPhone" name="phone" placeholder="+91-XXXXXXXXXX" />
+                        </div>
+                        <div class="form-group">
+                            <label for="applyRole">ROLE *</label>
+                            <select id="applyRole" name="role" required>
+                                <option value="" disabled selected>Select a role</option>
+                                <option value="ai-ml-engineer">AI / Machine Learning Engineer</option>
+                                <option value="full-stack-developer">Full Stack Developer</option>
+                                <option value="legal-research-analyst">Legal Research Analyst</option>
+                                <option value="ui-ux-designer">UI/UX Designer</option>
+                                <option value="growth-partnerships">Growth & Partnerships Associate</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="applyLinkedIn">LINKEDIN</label>
+                            <input type="url" id="applyLinkedIn" name="linkedin" placeholder="https://linkedin.com/in/..." />
+                        </div>
+                        <div class="form-group">
+                            <label for="applyPortfolio">PORTFOLIO / GITHUB</label>
+                            <input type="url" id="applyPortfolio" name="portfolio" placeholder="https://..." />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="applyMotivation">MOTIVATION STATEMENT *</label>
+                        <textarea id="applyMotivation" name="motivation" rows="5" required placeholder="Why do you want to join LawWise Nyai AI? What unique perspective do you bring?"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>RESUME *</label>
+                        <div class="drop-zone" id="dropZone">
+                            <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                                <polyline points="17 8 12 3 7 8" />
+                                <line x1="12" y1="3" x2="12" y2="15" />
+                            </svg>
+                            <span class="drop-zone-text"><strong>Drop your resume here</strong> or click to browse</span>
+                            <span class="drop-zone-hint">PDF / DOC / DOCX — Max 5MB</span>
+                        </div>
+                        <input type="file" id="resumeFile" name="resume" accept=".pdf,.doc,.docx" style="display:none" required />
+                        <span class="file-name-display" id="fileName"></span>
+                    </div>
+                    <button type="submit" class="btn silver-btn" style="width:100%"><span class="btn-text">Submit Application</span></button>
+                </form>
+
+                <div id="applySuccess" class="form-success" style="display:none">
+                    <div class="success-icon">
+                        <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M22 11.08V12a10 10 0 11-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" />
+                        </svg>
+                    </div>
+                    <h3>Application Submitted</h3>
+                    <p>Thank you for your interest in LawWise Nyai AI. We'll review your application and respond within 5-7 business days.</p>
+                    <a href="careers.html" class="btn btn-outline">Back to Careers</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== TRUST STRIP ========== -->
+    <div class="trust-strip">
+        <div class="container">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+            <p>All applications are handled confidentially.</p>
+        </div>
+    </div>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-left">
+                <a href="index.html" class="nav-logo" aria-label="LawWise Nyai AI Home">
+                    <span class="logo-mark">L</span>
+                    <span>LAWWISE</span>
+                </a>
+                <p class="footer-tagline">AI-powered legal intelligence for modern lawyers.</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <a href="index.html#features">Features</a>
+                    <a href="index.html#lawyer-network">Network</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <a href="index.html#founders">About Us</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="careers.html">Careers</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2026 LawWise Nyai AI Pvt. Ltd. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="forcefield.js"></script>
+    <script>
+        window.addEventListener('load', () => {
+            initForceField('forceFieldApply', {
+                hue: 210,
+                saturation: 15,
+                spacing: 12,
+                density: 1.8,
+                minStroke: 1.5,
+                maxStroke: 4,
+                forceStrength: 12,
+                magnifierRadius: 180,
+                friction: 0.88,
+                restoreSpeed: 0.04,
+                particleOpacity: 0.55
+            });
+        });
+    </script>
+</body>
+
+</html>
