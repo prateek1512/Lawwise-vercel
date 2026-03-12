@@ -50,7 +50,7 @@
 
     /* Sizing */
     --nav-height: 80px;
-    --section-pad: 120px;
+    --section-pad: 40px;
     --fluid-w: 92vw;
 
     /* Transitions */
@@ -866,7 +866,7 @@ img {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 0;
-    margin-bottom: 64px;
+    margin-bottom: 24px;
 }
 
 .challenge-stat {
@@ -979,63 +979,84 @@ img {
     align-items: center;
 }
 
-.solution-desc {
-    font-size: 15px;
+.solution-info-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.sol-info-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 24px;
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    background: var(--glass-bg);
+    transition: all 0.3s var(--ease-out);
+}
+
+.sol-info-card:hover {
+    border-color: var(--border-hover);
+    background: var(--glass-hover);
+    transform: translateX(4px);
+}
+
+.sol-info-card .sol-info-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    color: var(--silver-muted);
+    flex-shrink: 0;
+}
+
+.sol-info-content h3 {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.4rem;
+    color: var(--white);
+    margin-bottom: 6px;
+    font-weight: 400;
+}
+
+.sol-info-content p {
+    font-size: 14px;
     color: var(--silver);
-    margin-bottom: 24px;
-    line-height: 1.8;
+    line-height: 1.6;
     font-weight: 300;
 }
 
-.solution-desc strong {
+.sol-info-content p strong {
     color: var(--white);
     font-weight: 500;
 }
 
-.solution-features {
+.sol-info-content ul {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin-bottom: 28px;
+    gap: 6px;
+    margin-top: 8px;
 }
 
-.solution-features li {
-    position: relative;
-    padding-left: 22px;
-    font-size: 14px;
+.sol-info-content ul li {
+    font-size: 13px;
     color: var(--silver);
-    line-height: 1.65;
-    font-weight: 300;
+    position: relative;
+    padding-left: 16px;
 }
 
-.solution-features li::before {
-    content: '';
+.sol-info-content ul li::before {
+    content: '—';
     position: absolute;
     left: 0;
-    top: 9px;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--silver-muted);
-}
-
-.solution-impact {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 28px;
-}
-
-.solution-impact p {
-    padding: 8px 18px;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    background: var(--glass-bg);
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--silver);
+    color: var(--silver-muted);
+    opacity: 0.5;
 }
 
 .solution-quote {
@@ -1168,6 +1189,11 @@ img {
 .bento-card:hover {
     background: var(--glass-hover);
     border-color: var(--border-hover);
+}
+
+.bento-icon {
+    color: var(--silver-muted);
+    margin-bottom: 24px;
 }
 
 .bento-index {

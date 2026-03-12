@@ -188,11 +188,42 @@ document.addEventListener('DOMContentLoaded', () => {
     // ---------- APPLY FORM ----------
     const applyForm = document.getElementById('applyForm');
     if (applyForm) {
-        applyForm.addEventListener('submit', (e) => {
+        applyForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            applyForm.style.display = 'none';
-            const success = document.getElementById('applySuccess');
-            if (success) success.style.display = 'block';
+
+            const submitBtn = applyForm.querySelector('button[type="submit"]');
+            const submitText = submitBtn.querySelector('.btn-text');
+            const originalText = submitText ? submitText.textContent : 'Submit Application';
+
+            submitBtn.disabled = true;
+            if (submitText) submitText.textContent = 'Submitting...';
+
+            try {
+                const formData = new FormData(applyForm);
+                
+                // Point directly to the Vercel serverless function
+                const response = await fetch('/api/apply', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok && result.success) {
+                    applyForm.style.display = 'none';
+                    const success = document.getElementById('applySuccess');
+                    if (success) success.style.display = 'block';
+                } else {
+                    alert('Error: ' + (result.error || 'Failed to submit application.'));
+                    submitBtn.disabled = false;
+                    if (submitText) submitText.textContent = originalText;
+                }
+            } catch (err) {
+                console.error('Submission error:', err);
+                alert('An error occurred while submitting your application. Please ensure the backend server is running.');
+                submitBtn.disabled = false;
+                if (submitText) submitText.textContent = originalText;
+            }
         });
     }
 
