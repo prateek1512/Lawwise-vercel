@@ -103,27 +103,34 @@ export default async function handler(req, res) {
         const sheets = google.sheets({ version: 'v4', auth });
 
         // -- 1. Upload file to Google Drive --
-        const fileStream = new Readable();
-        fileStream.push(req.file.buffer);
-        fileStream.push(null);
+        let resumeLink = 'Not Uploaded';
+        try {
+            if (!process.env.GOOGLE_DRIVE_FOLDER_ID) {
+                throw new Error("GOOGLE_DRIVE_FOLDER_ID is not set");
+            }
 
-        if (!process.env.GOOGLE_DRIVE_FOLDER_ID) {
-            throw new Error("GOOGLE_DRIVE_FOLDER_ID is not set");
+            const fileStream = new Readable();
+            fileStream.push(req.file.buffer);
+            fileStream.push(null);
+
+            const driveRes = await drive.files.create({
+                requestBody: {
+                    name: `[${role}] ${name} - Resume`,
+                    parents: [process.env.GOOGLE_DRIVE_FOLDER_ID],
+                },
+                media: {
+                    mimeType: req.file.mimetype,
+                    body: fileStream,
+                },
+                fields: "id, webViewLink",
+                supportsAllDrives: true
+            });
+
+            resumeLink = driveRes.data.webViewLink || 'Unlinked File Uploaded';
+        } catch (driveErr) {
+            console.warn("Google Drive Upload Failed:", driveErr.message);
+            resumeLink = 'Drive Upload Failed - See Email Attachment';
         }
-
-        const driveRes = await drive.files.create({
-            requestBody: {
-                name: `[${role}] ${name} - Resume`,
-                parents: [process.env.GOOGLE_DRIVE_FOLDER_ID],
-            },
-            media: {
-                mimeType: req.file.mimetype,
-                body: fileStream,
-            },
-            fields: "id, webViewLink"
-        });
-
-const resumeLink = driveRes.data.webViewLink || 'Unlinked File Uploaded';
 
 // -- 2. Append Data to Google Sheets --
 if (process.env.GOOGLE_SHEET_ID) {
@@ -175,7 +182,13 @@ if (process.env.SMTP_USER && process.env.SMTP_PASS) {
             from: `"LawWise Careers" <${process.env.SMTP_USER}>`,
             to: process.env.COMPANY_EMAIL,
             subject: `New Application: ${name} for ${role}`,
-            text: `New application received!\n\nName: ${name}\nEmail: ${email}\nRole: ${role}\nResume: ${resumeLink}\nMotivation: ${motivation}`
+            text: `New application received!\n\nName: ${name}\nEmail: ${email}\nRole: ${role}\nResume: ${resumeLink}\nMotivation: ${motivation}`,
+            attachments: [
+                {
+                    filename: req.file.originalname || `Resume_${name.replace(/\s+/g, '_')}.pdf`,
+                    content: req.file.buffer
+                }
+            ]
         });
     }
 }
