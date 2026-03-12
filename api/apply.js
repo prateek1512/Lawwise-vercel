@@ -107,30 +107,20 @@ export default async function handler(req, res) {
         fileStream.push(req.file.buffer);
         fileStream.push(null);
 
+        if (!process.env.GOOGLE_DRIVE_FOLDER_ID) {
+            throw new Error("GOOGLE_DRIVE_FOLDER_ID is not set");
+        }
+
         const driveRes = await drive.files.create({
             requestBody: {
                 name: `[${role}] ${name} - Resume`,
-                if(!process.env.GOOGLE_DRIVE_FOLDER_ID) {
-                    throw new Error("GOOGLE_DRIVE_FOLDER_ID is not set");
-    }
-
-const driveRes = await drive.files.create({
-        requestBody: {
-            name: `[${role}] ${name} - Resume`,
-            parents: [process.env.GOOGLE_DRIVE_FOLDER_ID],
-        },
-        media: {
-            mimeType: req.file.mimetype,
-            body: fileStream,
-        },
-        fields: "id, webViewLink"
-    });
-},
-media: {
-    mimeType: req.file.mimetype,
-        body: fileStream,
+                parents: [process.env.GOOGLE_DRIVE_FOLDER_ID],
             },
-fields: 'id, webViewLink'
+            media: {
+                mimeType: req.file.mimetype,
+                body: fileStream,
+            },
+            fields: "id, webViewLink"
         });
 
 const resumeLink = driveRes.data.webViewLink || 'Unlinked File Uploaded';
