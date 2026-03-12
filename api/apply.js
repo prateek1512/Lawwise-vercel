@@ -31,10 +31,10 @@ const upload = multer({
 // -----------------------------------------------------------------------------
 function getGoogleAuth() {
     // Escape formatted newlines in private key
-    const privateKey = process.env.GOOGLE_PRIVATE_KEY 
-        ? process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n') 
+    const privateKey = process.env.GOOGLE_PRIVATE_KEY
+        ? process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n')
         : '';
-        
+
     return new google.auth.JWT(
         process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
         null,
@@ -47,18 +47,18 @@ function getGoogleAuth() {
 // 3. Vercel Serverless Utilities
 // -----------------------------------------------------------------------------
 const runMiddleware = (req, res, fn) => {
-  return new Promise((resolve, reject) => {
-    fn(req, res, (result) => {
-      if (result instanceof Error) return reject(result);
-      return resolve(result);
+    return new Promise((resolve, reject) => {
+        fn(req, res, (result) => {
+            if (result instanceof Error) return reject(result);
+            return resolve(result);
+        });
     });
-  });
 };
 
 export const config = {
-  api: {
-    bodyParser: false, // Disallow Vercel body parsing so multer can handle the file
-  },
+    api: {
+        bodyParser: false, // Disallow Vercel body parsing so multer can handle the file
+    },
 };
 
 // -----------------------------------------------------------------------------
@@ -74,7 +74,7 @@ export default async function handler(req, res) {
 
         // -- Validate & Sanitize Input --
         let { name, email, phone, role, linkedin, portfolio, motivation } = req.body;
-        
+
         // Basic required checks
         if (!name || !email || !role || !motivation) {
             return res.status(400).json({ success: false, error: 'Missing required fields' });
@@ -110,76 +110,90 @@ export default async function handler(req, res) {
         const driveRes = await drive.files.create({
             requestBody: {
                 name: `[${role}] ${name} - Resume`,
-                parents: process.env.GOOGLE_DRIVE_FOLDER_ID ? [process.env.GOOGLE_DRIVE_FOLDER_ID] : undefined,
+                if(!process.env.GOOGLE_DRIVE_FOLDER_ID) {
+                    throw new Error("GOOGLE_DRIVE_FOLDER_ID is not set");
+    }
+
+const driveRes = await drive.files.create({
+        requestBody: {
+            name: `[${role}] ${name} - Resume`,
+            parents: [process.env.GOOGLE_DRIVE_FOLDER_ID],
+        },
+        media: {
+            mimeType: req.file.mimetype,
+            body: fileStream,
+        },
+        fields: "id, webViewLink"
+    });
+},
+media: {
+    mimeType: req.file.mimetype,
+        body: fileStream,
             },
-            media: {
-                mimeType: req.file.mimetype,
-                body: fileStream,
-            },
-            fields: 'id, webViewLink'
+fields: 'id, webViewLink'
         });
 
-        const resumeLink = driveRes.data.webViewLink || 'Unlinked File Uploaded';
+const resumeLink = driveRes.data.webViewLink || 'Unlinked File Uploaded';
 
-        // -- 2. Append Data to Google Sheets --
-        if (process.env.GOOGLE_SHEET_ID) {
-            await sheets.spreadsheets.values.append({
-                spreadsheetId: process.env.GOOGLE_SHEET_ID,
-                range: 'Sheet1!A:H', // Adjust based on your actual sheet name
-                valueInputOption: 'USER_ENTERED',
-                requestBody: {
-                    values: [
-                        [
-                            new Date().toISOString(), // Timestamp
-                            name, 
-                            email, 
-                            phone, 
-                            role, 
-                            linkedin, 
-                            portfolio, 
-                            motivation, 
-                            resumeLink
-                        ]
-                    ]
-                }
-            });
+// -- 2. Append Data to Google Sheets --
+if (process.env.GOOGLE_SHEET_ID) {
+    await sheets.spreadsheets.values.append({
+        spreadsheetId: process.env.GOOGLE_SHEET_ID,
+        range: 'Sheet1!A:H', // Adjust based on your actual sheet name
+        valueInputOption: 'USER_ENTERED',
+        requestBody: {
+            values: [
+                [
+                    new Date().toISOString(), // Timestamp
+                    name,
+                    email,
+                    phone,
+                    role,
+                    linkedin,
+                    portfolio,
+                    motivation,
+                    resumeLink
+                ]
+            ]
         }
+    });
+}
 
-        // -- 3. Send Notification Emails (Nodemailer) --
-        if (process.env.SMTP_USER && process.env.SMTP_PASS) {
-            const transporter = nodemailer.createTransport({
-                host: process.env.SMTP_HOST || 'smtp.gmail.com',
-                port: process.env.SMTP_PORT || 465,
-                secure: true,
-                auth: {
-                    user: process.env.SMTP_USER,
-                    pass: process.env.SMTP_PASS
-                }
-            });
-
-            // Applicant Confirmation Email
-            await transporter.sendMail({
-                from: `"LawWise Careers" <${process.env.SMTP_USER}>`,
-                to: email,
-                subject: 'Application Received — LawWise Nyai AI',
-                html: `<p>Hi ${name},</p><p>Thank you for applying for the <strong>${role}</strong> position at LawWise Nyai AI.</p><p>We have successfully received your application and resume. Our team will review your application and respond within 5-7 business days.</p><br><p>Best,</p><p>LawWise Team</p>`
-            });
-
-            // Company Notification Email
-            if (process.env.COMPANY_EMAIL) {
-                await transporter.sendMail({
-                    from: `"LawWise Careers" <${process.env.SMTP_USER}>`,
-                    to: process.env.COMPANY_EMAIL,
-                    subject: `New Application: ${name} for ${role}`,
-                    text: `New application received!\n\nName: ${name}\nEmail: ${email}\nRole: ${role}\nResume: ${resumeLink}\nMotivation: ${motivation}`
-                });
-            }
+// -- 3. Send Notification Emails (Nodemailer) --
+if (process.env.SMTP_USER && process.env.SMTP_PASS) {
+    const transporter = nodemailer.createTransport({
+        host: process.env.SMTP_HOST || 'smtp.gmail.com',
+        port: process.env.SMTP_PORT || 465,
+        secure: true,
+        auth: {
+            user: process.env.SMTP_USER,
+            pass: process.env.SMTP_PASS
         }
+    });
 
-        return res.status(200).json({ success: true, message: 'Application submitted successfully' });
+    // Applicant Confirmation Email
+    await transporter.sendMail({
+        from: `"LawWise Careers" <${process.env.SMTP_USER}>`,
+        to: email,
+        subject: 'Application Received — LawWise Nyai AI',
+        html: `<p>Hi ${name},</p><p>Thank you for applying for the <strong>${role}</strong> position at LawWise Nyai AI.</p><p>We have successfully received your application and resume. Our team will review your application and respond within 5-7 business days.</p><br><p>Best,</p><p>LawWise Team</p>`
+    });
+
+    // Company Notification Email
+    if (process.env.COMPANY_EMAIL) {
+        await transporter.sendMail({
+            from: `"LawWise Careers" <${process.env.SMTP_USER}>`,
+            to: process.env.COMPANY_EMAIL,
+            subject: `New Application: ${name} for ${role}`,
+            text: `New application received!\n\nName: ${name}\nEmail: ${email}\nRole: ${role}\nResume: ${resumeLink}\nMotivation: ${motivation}`
+        });
+    }
+}
+
+return res.status(200).json({ success: true, message: 'Application submitted successfully' });
 
     } catch (error) {
-        console.error("Apply Error:", error);
-        return res.status(500).json({ success: false, error: error.message || 'An internal server error occurred' });
-    }
+    console.error("Apply Error:", error);
+    return res.status(500).json({ success: false, error: error.message || 'An internal server error occurred' });
+}
 }
