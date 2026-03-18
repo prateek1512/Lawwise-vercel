@@ -328,7 +328,6 @@ img {
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #1B1B2F 0%, #6B7A8D 100%);
     display: flex;
     align-items: center;
     justify-content: center;
