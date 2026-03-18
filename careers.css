@@ -30,9 +30,6 @@
 }
 
 /* Why Grid */
-.careers-why {
-    border-bottom: 1px solid var(--border-color);
-}
 
 .why-grid {
     display: grid;
@@ -74,9 +71,7 @@
 }
 
 /* Roles */
-.careers-roles {
-    border-bottom: 1px solid var(--border-color);
-}
+
 
 .roles-grid {
     display: grid;
@@ -156,9 +151,7 @@
 }
 
 /* Values */
-.careers-values {
-    border-bottom: 1px solid var(--border-color);
-}
+
 
 .values-grid {
     display: flex;

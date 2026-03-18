@@ -98,33 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (rolodexContainer) {
         const words = rolodexContainer.querySelectorAll('.rolodex-word');
         let currentIndex = 0;
-
-        // Set container width to the widest word so layout doesn't jump
-        function setContainerWidth() {
-            let maxWidth = 0;
-            words.forEach(word => {
-                word.style.position = 'relative';
-                word.style.visibility = 'hidden';
-                word.style.opacity = '1';
-                word.style.transform = 'none';
-                const w = word.offsetWidth;
-                if (w > maxWidth) maxWidth = w;
-            });
-            // Reset back
-            words.forEach((word, i) => {
-                word.style.visibility = '';
-                word.style.opacity = '';
-                word.style.transform = '';
-                if (i === 0) {
-                    word.style.position = 'relative';
-                } else {
-                    word.style.position = 'absolute';
-                }
-            });
-            rolodexContainer.style.width = maxWidth + 'px';
-        }
-        setContainerWidth();
-        window.addEventListener('resize', setContainerWidth);
+        let rolodexInterval;
 
         function cycleRolodex() {
             const currentWord = words[currentIndex];
@@ -135,14 +109,14 @@ document.addEventListener('DOMContentLoaded', () => {
             currentWord.classList.remove('active');
             currentWord.classList.add('exit');
 
-            // Prepare next word below
+            // Prepare next word (jump to bottom position without transition)
             nextWord.classList.remove('exit');
             nextWord.classList.add('enter');
 
-            // Force reflow so the 'enter' position is applied before transition
+            // Force reflow so the 'enter' position is applied immediately
             void nextWord.offsetHeight;
 
-            // Bring next word in
+            // Bring next word in (transition to active)
             requestAnimationFrame(() => {
                 nextWord.classList.remove('enter');
                 nextWord.classList.add('active');
@@ -151,12 +125,36 @@ document.addEventListener('DOMContentLoaded', () => {
             // Clean up exit class after transition
             setTimeout(() => {
                 currentWord.classList.remove('exit');
-            }, 700);
+            }, 250);
 
             currentIndex = nextIndex;
         }
 
-        setInterval(cycleRolodex, 2500);
+        // Start interval
+        function startRolodex() {
+            if (!rolodexInterval) {
+                rolodexInterval = setInterval(cycleRolodex, 1000);
+            }
+        }
+
+        // Stop interval
+        function stopRolodex() {
+            if (rolodexInterval) {
+                clearInterval(rolodexInterval);
+                rolodexInterval = null;
+            }
+        }
+
+        startRolodex();
+
+        // Pause animation when tab is inactive to prevent CSS transition desync/overlap
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) {
+                stopRolodex();
+            } else {
+                startRolodex();
+            }
+        });
     }
 
     // ---------- SMOOTH SCROLL ----------
@@ -188,11 +186,42 @@ document.addEventListener('DOMContentLoaded', () => {
     // ---------- APPLY FORM ----------
     const applyForm = document.getElementById('applyForm');
     if (applyForm) {
-        applyForm.addEventListener('submit', (e) => {
+        applyForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            applyForm.style.display = 'none';
-            const success = document.getElementById('applySuccess');
-            if (success) success.style.display = 'block';
+
+            const submitBtn = applyForm.querySelector('button[type="submit"]');
+            const submitText = submitBtn.querySelector('.btn-text');
+            const originalText = submitText ? submitText.textContent : 'Submit Application';
+
+            submitBtn.disabled = true;
+            if (submitText) submitText.textContent = 'Submitting...';
+
+            try {
+                const formData = new FormData(applyForm);
+                
+                // Adjust this URL in production
+                const response = await fetch('http://localhost:3000/api/apply', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok && result.success) {
+                    applyForm.style.display = 'none';
+                    const success = document.getElementById('applySuccess');
+                    if (success) success.style.display = 'block';
+                } else {
+                    alert('Error: ' + (result.error || 'Failed to submit application.'));
+                    submitBtn.disabled = false;
+                    if (submitText) submitText.textContent = originalText;
+                }
+            } catch (err) {
+                console.error('Submission error:', err);
+                alert('An error occurred while submitting your application. Please ensure the backend server is running.');
+                submitBtn.disabled = false;
+                if (submitText) submitText.textContent = originalText;
+            }
         });
     }
 
@@ -363,5 +392,169 @@ document.addEventListener('DOMContentLoaded', () => {
         // Initial setup
         setViewportHeight();
         window.addEventListener('resize', setViewportHeight);
+    }
+
+    // ---------- TILT CARD & TOOLTIP EFFECT ----------
+    const tiltCards = document.querySelectorAll('.tilt-card');
+    if (tiltCards.length > 0) {
+        // Create single global tooltip
+        const tooltip = document.createElement('div');
+        tooltip.className = 'tilt-tooltip';
+        document.body.appendChild(tooltip);
+
+        let tooltipTargetX = 0;
+        let tooltipTargetY = 0;
+        let tooltipCurrentX = 0;
+        let tooltipCurrentY = 0;
+        let tooltipTargetOpacity = 0;
+        let tooltipCurrentOpacity = 0;
+        let tooltipTargetRotate = 0;
+        let tooltipCurrentRotate = 0;
+        let tooltipAnimating = false;
+        let tooltipLastY = 0;
+
+        function updateTooltip() {
+            tooltipCurrentX += (tooltipTargetX - tooltipCurrentX) * 0.2;
+            tooltipCurrentY += (tooltipTargetY - tooltipCurrentY) * 0.2;
+            tooltipCurrentOpacity += (tooltipTargetOpacity - tooltipCurrentOpacity) * 0.15;
+            tooltipCurrentRotate += (tooltipTargetRotate - tooltipCurrentRotate) * 0.15;
+
+            // Using fixed positioning and Viewport coordinates
+            tooltip.style.transform = `translate(${tooltipCurrentX}px, ${tooltipCurrentY}px) rotate(${tooltipCurrentRotate}deg)`;
+            tooltip.style.opacity = tooltipCurrentOpacity;
+
+            if (Math.abs(tooltipTargetOpacity - tooltipCurrentOpacity) < 0.01 && tooltipTargetOpacity === 0) {
+                tooltip.style.opacity = '0';
+                tooltipAnimating = false;
+                return;
+            }
+
+            if (tooltipAnimating) {
+                requestAnimationFrame(updateTooltip);
+            }
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            const velocityY = e.clientY - tooltipLastY;
+            tooltipTargetRotate = -velocityY * 0.6; 
+            tooltipLastY = e.clientY;
+        });
+
+        tiltCards.forEach(card => {
+            let targetRotateX = 0;
+            let targetRotateY = 0;
+            let currentRotateX = 0;
+            let currentRotateY = 0;
+            let targetScale = 1;
+            let currentScale = 1;
+
+            let isHovered = false;
+            let isAnimating = false;
+            const rotateAmplitude = 12;
+
+            function updateTilt() {
+                currentRotateX += (targetRotateX - currentRotateX) * 0.12;
+                currentRotateY += (targetRotateY - currentRotateY) * 0.12;
+                currentScale += (targetScale - currentScale) * 0.15;
+
+                const diff = Math.abs(targetRotateX - currentRotateX) + 
+                             Math.abs(targetRotateY - currentRotateY) + 
+                             Math.abs(targetScale - currentScale);
+
+                if (diff < 0.005 && !isHovered && targetScale === 1) {
+                    currentRotateX = targetRotateX;
+                    currentRotateY = targetRotateY;
+                    currentScale = targetScale;
+                    card.style.transform = '';
+                    // Restore original CSS transition when returning to rest 
+                    card.style.transition = '';
+                    isAnimating = false;
+                    return;
+                }
+
+                card.style.transform = `perspective(1000px) scale(${currentScale}) rotateX(${currentRotateX}deg) rotateY(${currentRotateY}deg)`;
+                
+                if (isAnimating) {
+                    requestAnimationFrame(updateTilt);
+                }
+            }
+
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                
+                // Tilt logic
+                const offsetX = e.clientX - rect.left - rect.width / 2;
+                const offsetY = e.clientY - rect.top - rect.height / 2;
+
+                targetRotateX = (offsetY / (rect.height / 2)) * -rotateAmplitude;
+                targetRotateY = (offsetX / (rect.width / 2)) * rotateAmplitude;
+                targetScale = 1.02;
+
+                if (!isAnimating) {
+                    isAnimating = true;
+                    requestAnimationFrame(updateTilt);
+                }
+
+                // Tooltip logic
+                tooltipTargetX = e.clientX + 15;
+                tooltipTargetY = e.clientY + 15;
+                if (!tooltipAnimating) {
+                    tooltipAnimating = true;
+                    requestAnimationFrame(updateTooltip);
+                }
+            });
+
+            card.addEventListener('mouseenter', (e) => {
+                isHovered = true;
+                targetScale = 1.02;
+
+                // CRITICAL FIX: Override the .anim-reveal CSS transition so it doesn't fight JS loop
+                card.style.transition = 'box-shadow 0.4s ease-out, border-color 0.4s ease-out, background 0.4s ease-out';
+
+                if (!isAnimating) {
+                    isAnimating = true;
+                    requestAnimationFrame(updateTilt);
+                }
+
+                const caption = card.getAttribute('data-caption');
+                if (caption) {
+                    tooltip.textContent = caption;
+                    
+                    // Snap tooltip to initial position if it's currently invisible
+                    if (tooltipTargetOpacity === 0) {
+                        tooltipCurrentX = e.clientX + 15;
+                        tooltipCurrentY = e.clientY + 15;
+                    }
+                    
+                    tooltipTargetX = e.clientX + 15;
+                    tooltipTargetY = e.clientY + 15;
+                    tooltipTargetOpacity = 1;
+
+                    if (!tooltipAnimating) {
+                        tooltipAnimating = true;
+                        requestAnimationFrame(updateTooltip);
+                    }
+                }
+            });
+
+            card.addEventListener('mouseleave', () => {
+                isHovered = false;
+                targetRotateX = 0;
+                targetRotateY = 0;
+                targetScale = 1;
+                
+                if (!isAnimating) {
+                    isAnimating = true;
+                    requestAnimationFrame(updateTilt);
+                }
+
+                tooltipTargetOpacity = 0;
+                tooltipTargetRotate = 0;
+                if (!tooltipAnimating) {
+                    tooltipAnimating = true;
+                    requestAnimationFrame(updateTooltip);
+                }
+            });
+        });
     }
 });
