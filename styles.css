@@ -980,7 +980,11 @@ img {
     width: 48px;
     height: 48px;
     border-radius: 12px;
+<<<<<<< HEAD
     background: rgba(0, 0, 0, 0.02);
+=======
+    background: rgba(255, 255, 255, 0.03);
+>>>>>>> 6689b28183bf7ba867cfec5761e40bc01c40e977
     border: 1px solid var(--border-color);
     color: var(--silver-muted);
     flex-shrink: 0;
@@ -1160,6 +1164,11 @@ img {
 .bento-icon {
     color: #1B1B2F;
     /* Darker for visibility on light bg */
+    margin-bottom: 24px;
+}
+
+.bento-icon {
+    color: var(--silver-muted);
     margin-bottom: 24px;
 }
 
