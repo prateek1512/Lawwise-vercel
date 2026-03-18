@@ -199,13 +199,8 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 const formData = new FormData(applyForm);
                 
-<<<<<<< HEAD
                 // Adjust this URL in production
                 const response = await fetch('http://localhost:3000/api/apply', {
-=======
-                // Point directly to the Vercel serverless function
-                const response = await fetch('/api/apply', {
->>>>>>> 6689b28183bf7ba867cfec5761e40bc01c40e977
                     method: 'POST',
                     body: formData
                 });
