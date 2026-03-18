@@ -175,11 +175,43 @@ document.addEventListener('DOMContentLoaded', () => {
     // ---------- CONTACT FORM ----------
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
+        contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            contactForm.style.display = 'none';
-            const success = document.getElementById('contactSuccess');
-            if (success) success.style.display = 'block';
+
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            const submitText = submitBtn ? submitBtn.querySelector('.btn-text') : null;
+            const originalText = submitText ? submitText.textContent : 'Send Message';
+
+            if (submitBtn) submitBtn.disabled = true;
+            if (submitText) submitText.textContent = 'Sending...';
+
+            try {
+                const formData = new FormData(contactForm);
+                const data = Object.fromEntries(formData.entries());
+
+                const response = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok && result.success) {
+                    contactForm.style.display = 'none';
+                    const success = document.getElementById('contactSuccess');
+                    if (success) success.style.display = 'block';
+                } else {
+                    alert('Error: ' + (result.error || 'Failed to send message.'));
+                    if (submitBtn) submitBtn.disabled = false;
+                    if (submitText) submitText.textContent = originalText;
+                }
+            } catch (err) {
+                console.error('Submission error:', err);
+                alert('An error occurred while sending your message. Please try again later.');
+                if (submitBtn) submitBtn.disabled = false;
+                if (submitText) submitText.textContent = originalText;
+            }
         });
     }
 
