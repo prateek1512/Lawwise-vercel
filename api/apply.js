@@ -103,39 +103,6 @@ export default async function handler(req, res) {
         const sheets = google.sheets({ version: 'v4', auth });
 
         // -- 1. Upload file to Google Drive --
-<<<<<<< HEAD
-        const fileStream = new Readable();
-        fileStream.push(req.file.buffer);
-        fileStream.push(null);
-
-        const driveRes = await drive.files.create({
-            requestBody: {
-                name: `[${role}] ${name} - Resume`,
-                if(!process.env.GOOGLE_DRIVE_FOLDER_ID) {
-                    throw new Error("GOOGLE_DRIVE_FOLDER_ID is not set");
-    }
-
-const driveRes = await drive.files.create({
-        requestBody: {
-            name: `[${role}] ${name} - Resume`,
-            parents: [process.env.GOOGLE_DRIVE_FOLDER_ID],
-        },
-        media: {
-            mimeType: req.file.mimetype,
-            body: fileStream,
-        },
-        fields: "id, webViewLink"
-    });
-},
-media: {
-    mimeType: req.file.mimetype,
-        body: fileStream,
-            },
-fields: 'id, webViewLink'
-        });
-
-const resumeLink = driveRes.data.webViewLink || 'Unlinked File Uploaded';
-=======
         let resumeLink = 'Not Uploaded';
         try {
             if (!process.env.GOOGLE_DRIVE_FOLDER_ID) {
@@ -164,72 +131,67 @@ const resumeLink = driveRes.data.webViewLink || 'Unlinked File Uploaded';
             console.warn("Google Drive Upload Failed:", driveErr.message);
             resumeLink = 'Drive Upload Failed - See Email Attachment';
         }
->>>>>>> 6689b28183bf7ba867cfec5761e40bc01c40e977
 
-// -- 2. Append Data to Google Sheets --
-if (process.env.GOOGLE_SHEET_ID) {
-    await sheets.spreadsheets.values.append({
-        spreadsheetId: process.env.GOOGLE_SHEET_ID,
-        range: 'Sheet1!A:H', // Adjust based on your actual sheet name
-        valueInputOption: 'USER_ENTERED',
-        requestBody: {
-            values: [
-                [
-                    new Date().toISOString(), // Timestamp
-                    name,
-                    email,
-                    phone,
-                    role,
-                    linkedin,
-                    portfolio,
-                    motivation,
-                    resumeLink
-                ]
-            ]
-        }
-    });
-}
-
-// -- 3. Send Notification Emails (Nodemailer) --
-if (process.env.SMTP_USER && process.env.SMTP_PASS) {
-    const transporter = nodemailer.createTransport({
-        host: process.env.SMTP_HOST || 'smtp.gmail.com',
-        port: process.env.SMTP_PORT || 465,
-        secure: true,
-        auth: {
-            user: process.env.SMTP_USER,
-            pass: process.env.SMTP_PASS
-        }
-    });
-
-    // Applicant Confirmation Email
-    await transporter.sendMail({
-        from: `"LawWise Careers" <${process.env.SMTP_USER}>`,
-        to: email,
-        subject: 'Application Received — LawWise Nyai AI',
-        html: `<p>Hi ${name},</p><p>Thank you for applying for the <strong>${role}</strong> position at LawWise Nyai AI.</p><p>We have successfully received your application and resume. Our team will review your application and respond within 5-7 business days.</p><br><p>Best,</p><p>LawWise Team</p>`
-    });
-
-    // Company Notification Email
-    if (process.env.COMPANY_EMAIL) {
-        await transporter.sendMail({
-            from: `"LawWise Careers" <${process.env.SMTP_USER}>`,
-            to: process.env.COMPANY_EMAIL,
-            subject: `New Application: ${name} for ${role}`,
-<<<<<<< HEAD
-            text: `New application received!\n\nName: ${name}\nEmail: ${email}\nRole: ${role}\nResume: ${resumeLink}\nMotivation: ${motivation}`
-=======
-            text: `New application received!\n\nName: ${name}\nEmail: ${email}\nRole: ${role}\nResume: ${resumeLink}\nMotivation: ${motivation}`,
-            attachments: [
-                {
-                    filename: req.file.originalname || `Resume_${name.replace(/\s+/g, '_')}.pdf`,
-                    content: req.file.buffer
+        // -- 2. Append Data to Google Sheets --
+        if (process.env.GOOGLE_SHEET_ID) {
+            await sheets.spreadsheets.values.append({
+                spreadsheetId: process.env.GOOGLE_SHEET_ID,
+                range: 'Sheet1!A:H', // Adjust based on your actual sheet name
+                valueInputOption: 'USER_ENTERED',
+                requestBody: {
+                    values: [
+                        [
+                            new Date().toISOString(), // Timestamp
+                            name,
+                            email,
+                            phone,
+                            role,
+                            linkedin,
+                            portfolio,
+                            motivation,
+                            resumeLink
+                        ]
+                    ]
                 }
-            ]
->>>>>>> 6689b28183bf7ba867cfec5761e40bc01c40e977
-        });
-    }
-}
+            });
+        }
+
+        // -- 3. Send Notification Emails (Nodemailer) --
+        if (process.env.SMTP_USER && process.env.SMTP_PASS) {
+            const transporter = nodemailer.createTransport({
+                host: process.env.SMTP_HOST || 'smtp.gmail.com',
+                port: process.env.SMTP_PORT || 465,
+                secure: true,
+                auth: {
+                    user: process.env.SMTP_USER,
+                    pass: process.env.SMTP_PASS
+                }
+            });
+
+            // Applicant Confirmation Email
+            await transporter.sendMail({
+                from: `"LawWise Careers" <${process.env.SMTP_USER}>`,
+                to: email,
+                subject: 'Application Received — LawWise Nyai AI',
+                html: `<p>Hi ${name},</p><p>Thank you for applying for the <strong>${role}</strong> position at LawWise Nyai AI.</p><p>We have successfully received your application and resume. Our team will review your application and respond within 5-7 business days.</p><br><p>Best,</p><p>LawWise Team</p>`
+            });
+
+            // Company Notification Email
+            if (process.env.COMPANY_EMAIL) {
+                await transporter.sendMail({
+                    from: `"LawWise Careers" <${process.env.SMTP_USER}>`,
+                    to: process.env.COMPANY_EMAIL,
+                    subject: `New Application: ${name} for ${role}`,
+                    text: `New application received!\n\nName: ${name}\nEmail: ${email}\nRole: ${role}\nResume: ${resumeLink}\nMotivation: ${motivation}`,
+                    attachments: [
+                        {
+                            filename: req.file.originalname || `Resume_${name.replace(/\s+/g, '_')}.pdf`,
+                            content: req.file.buffer
+                        }
+                    ]
+                });
+            }
+        }
 
 return res.status(200).json({ success: true, message: 'Application submitted successfully' });
 

@@ -232,7 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const formData = new FormData(applyForm);
                 
                 // Adjust this URL in production
-                const response = await fetch('http://localhost:3000/api/apply', {
+                const response = await fetch('/api/apply', {
                     method: 'POST',
                     body: formData
                 });
